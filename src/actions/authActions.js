@@ -65,7 +65,6 @@ export const loginUser = ({ email, password }) => async dispatch => {
             payload: response.data
         });
     } catch (error) {
-
         dispatch(setAlert(error.message, 'danger'));
 
         dispatch({
