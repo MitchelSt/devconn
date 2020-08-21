@@ -2,13 +2,14 @@ import React from "react";
 import Moment from "react-moment";
 import moment from "moment";
 import { deleteEducation } from "../../actions/profileActions";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 
 export default function Education() {
+  const dispatch = useDispatch();
   const profile = useSelector((state) => state.profile.profile);
 
   let educations;
-  if (profile !== null) {
+  if (profile !== null && profile.education) {
     educations = profile.education.map((edu) => (
       <tr key={edu._id}>
         <td>{edu.school}</td>
@@ -22,7 +23,10 @@ export default function Education() {
           )}
         </td>
         <td>
-          <button onClick={deleteEducation(edu._id)} className="btn btn-danger">
+          <button
+            onClick={() => dispatch(deleteEducation(edu._id))}
+            className="btn btn-danger"
+          >
             Delete
           </button>
         </td>

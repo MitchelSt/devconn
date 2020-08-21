@@ -2,13 +2,14 @@ import React from "react";
 import Moment from "react-moment";
 import moment from "moment";
 import { deleteExperience } from "../../actions/profileActions";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 
 export default function Experience() {
+  const dispatch = useDispatch();
   const profile = useSelector((state) => state.profile.profile);
 
   let experiences;
-  if (profile !== null) {
+  if (profile !== null && profile.experience) {
     experiences = profile.experience.map((exp) => (
       <tr key={exp._id}>
         <td>{exp.company}</td>
@@ -23,7 +24,7 @@ export default function Experience() {
         </td>
         <td>
           <button
-            onClick={deleteExperience(exp._id)}
+            onClick={() => dispatch(deleteExperience(exp._id))}
             className="btn btn-danger"
           >
             Delete

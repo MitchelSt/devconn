@@ -42,51 +42,54 @@ export default function EditProfile() {
   const profile = useSelector((state) => state.profile.profile);
   const loading = useSelector((state) => state.auth.loading);
 
-  useEffect(() => {
-    dispatch(getCurrentProfile());
+  useEffect(
+    () => {
+      dispatch(getCurrentProfile());
 
-    setFormState({
-      company: loading || !profile.company ? "" : profile.company,
-      location: loading || !profile.location ? "" : profile.location,
-      website: loading || !profile.website ? "" : profile.website,
-      bio: loading || !profile.bio ? "" : profile.bio,
-      skills: loading || !profile.skills ? "" : profile.skills.join(","),
-      status: loading || !profile.status ? "" : profile.status,
-      githubusername:
-        loading || !profile.githubusername ? "" : profile.githubusername,
-      youtube:
-        loading || !profile.social || !profile.social.youtube
-          ? ""
-          : profile.social.youtube,
-      twitter:
-        loading || !profile.social || !profile.social.twitter
-          ? ""
-          : profile.social.twitter,
-      instagram:
-        loading || !profile.social || !profile.social.instagram
-          ? ""
-          : profile.social.instagram,
-      linkedin:
-        loading || !profile.social || !profile.social.linkedin
-          ? ""
-          : profile.social.linkedin,
-      facebook:
-        loading || !profile.social || !profile.social.facebook
-          ? ""
-          : profile.social.facebook,
-    });
-  }, [
-    loading,
-    dispatch,
-    profile.bio,
-    profile.company,
-    profile.githubusername,
-    profile.location,
-    profile.skills,
-    profile.social,
-    profile.status,
-    profile.website,
-  ]);
+      setFormState({
+        company: loading || !profile.company ? "" : profile.company,
+        location: loading || !profile.location ? "" : profile.location,
+        website: loading || !profile.website ? "" : profile.website,
+        bio: loading || !profile.bio ? "" : profile.bio,
+        skills: loading || !profile.skills ? "" : profile.skills.join(","),
+        status: loading || !profile.status ? "" : profile.status,
+        githubusername:
+          loading || !profile.githubusername ? "" : profile.githubusername,
+        youtube:
+          loading || !profile.social || !profile.social.youtube
+            ? ""
+            : profile.social.youtube,
+        twitter:
+          loading || !profile.social || !profile.social.twitter
+            ? ""
+            : profile.social.twitter,
+        instagram:
+          loading || !profile.social || !profile.social.instagram
+            ? ""
+            : profile.social.instagram,
+        linkedin:
+          loading || !profile.social || !profile.social.linkedin
+            ? ""
+            : profile.social.linkedin,
+        facebook:
+          loading || !profile.social || !profile.social.facebook
+            ? ""
+            : profile.social.facebook,
+      });
+    },
+    [
+      // loading,
+      // dispatch,
+      // profile.bio,
+      // profile.company,
+      // profile.githubusername,
+      // profile.location,
+      // profile.skills,
+      // profile.social,
+      // profile.status,
+      // profile.website,
+    ]
+  );
 
   const onChange = (e) =>
     setFormState({ ...formState, [e.target.name]: e.target.value });

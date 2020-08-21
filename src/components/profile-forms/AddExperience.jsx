@@ -70,12 +70,13 @@ export default function AddExperience() {
           />
         </div>
         <div className="form-group">
-          <h4>From Date</h4>
+          <h4>* From Date</h4>
           <input
             type="date"
             name="from"
             value={from}
             onChange={(e) => onChange(e)}
+            required
           />
         </div>
         <div className="form-group">
@@ -108,9 +109,10 @@ export default function AddExperience() {
             name="description"
             cols="30"
             rows="5"
-            placeholder="Job Description"
+            placeholder="* Job Description"
             value={description}
             onChange={(e) => onChange(e)}
+            required
           />
         </div>
         <input type="submit" className="btn btn-primary my-1" />

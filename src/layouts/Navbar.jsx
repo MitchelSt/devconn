@@ -1,12 +1,20 @@
 import React from "react";
-import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { Link, useHistory } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
 import { logout } from "../actions/authActions";
 
 export default function Navbar() {
+  const history = useHistory();
+  const dispatch = useDispatch();
   const auth = useSelector((state) => state.auth);
   const isAuthenticated = auth.isAuthenticated;
   const loading = auth.loading;
+
+  function handleLogout() {
+    dispatch(logout());
+
+    history.push("/");
+  }
 
   const authLinks = (
     <ul>
@@ -23,10 +31,10 @@ export default function Navbar() {
         </Link>
       </li>
       <li>
-        <a onClick={logout} href="#!">
+        <Link onClick={() => handleLogout()}>
           <i className="fas fa-sign-out-alt" />{" "}
           <span className="hide-sm">Logout</span>
-        </a>
+        </Link>
       </li>
     </ul>
   );
@@ -49,7 +57,7 @@ export default function Navbar() {
     <div>
       <nav className="navbar bg-dark">
         <h1>
-          <Link to="/">
+          <Link to={auth ? "/dashboard" : "/"}>
             <i class="fas fa-code"></i> DevConnector
           </Link>
         </h1>
