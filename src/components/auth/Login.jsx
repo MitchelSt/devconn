@@ -1,6 +1,8 @@
 import React, { useState } from "react";
-import axios from "axios";
-import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, Redirect } from "react-router-dom";
+
+import { loginUser } from "../../actions/authActions";
 
 export default function Login() {
   const [formData, setFormData] = useState({
@@ -10,30 +12,20 @@ export default function Login() {
 
   const { email, password } = formData;
 
+  const dispatch = useDispatch();
+
+  const auth = useSelector((state) => state.auth.isAuthenticated);
+
+  if (auth) {
+    return <Redirect to="/dashboard" />;
+  }
+
   const onChange = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
 
   const onSubmit = async (e) => {
     e.preventDefault();
-
-    try {
-      const user = {
-        email,
-        password,
-      };
-
-      const options = {
-        method: "POST",
-        headers: { "Content-type": "application/json" },
-        data: JSON.stringify(user),
-        url: "http://localhost:5000/api/auth",
-      };
-      const response = await axios(options);
-
-      console.log(response);
-    } catch (error) {
-      console.log(error.response.data);
-    }
+    dispatch(loginUser({ email, password }));
   };
 
   return (

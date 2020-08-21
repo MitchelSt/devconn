@@ -1,6 +1,9 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import axios from "axios";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, Redirect } from "react-router-dom";
+
+import { setAlert } from "../../actions/alertActions";
+import { register } from "../../actions/authActions";
 
 export default function Register() {
   const [formData, setFormData] = useState({
@@ -12,33 +15,23 @@ export default function Register() {
 
   const { name, email, password, password2 } = formData;
 
+  const dispatch = useDispatch();
+
+  const auth = useSelector((state) => state.auth.isAuthenticated);
+
+  if (auth) {
+    return <Redirect to="/dashboard" />;
+  }
+
   const onChange = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
 
   const onSubmit = async (e) => {
     e.preventDefault();
     if (password !== password2) {
-      console.log("Passwords should match");
+      dispatch(setAlert("Passwords do not match", "danger"));
     } else {
-      const newUser = {
-        name,
-        email,
-        password,
-      };
-
-      try {
-        const options = {
-          method: "POST",
-          headers: { "Content-type": "application/json" },
-          data: JSON.stringify(newUser),
-          url: "http://localhost:5000/api/users",
-        };
-        const response = await axios(options);
-
-        console.log(response);
-      } catch (error) {
-        console.log(error.response.data);
-      }
+      dispatch(register({ name, email, password }));
     }
   };
 

@@ -1,7 +1,14 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { Link, Redirect } from "react-router-dom";
 
 export default function Landing() {
+  const auth = useSelector((state) => state.auth.isAuthenticated);
+
+  if (auth) {
+    return <Redirect to="/dashboard" />;
+  }
+
   return (
     <div>
       <section className="landing">
