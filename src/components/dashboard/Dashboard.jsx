@@ -5,15 +5,18 @@ import Spinner from "../../layouts/Spinner";
 import DashboardActions from "./DashboardActions";
 import Experience from "./Experience";
 import Education from "./Education";
+import { useHistory } from "react-router-dom";
+import { logout } from "../../actions/authActions";
 
 export default function Dashboard() {
   const loading = useSelector((state) => state.auth.loading);
+  const history = useHistory();
 
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(getCurrentProfile());
-  }, [dispatch]);
+  }, []);
 
   const user = useSelector((state) => state.auth.user);
 
@@ -31,13 +34,20 @@ export default function Dashboard() {
           <Experience />
           <Education />
           <div className="my-2">
-            <button className="btn btn-danger" onClick={deleteAccount()}>
+            <button
+              className="btn btn-danger"
+              onClick={() => {
+                deleteAccount();
+                dispatch(logout());
+                history.push("/");
+              }}
+            >
               <i className="fas fa-user-minus" /> Delete My Account
             </button>
           </div>
         </>
       ) : (
-        <>has not {user})</>
+        <>has not {user}</>
       )}
     </>
   );
